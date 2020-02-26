@@ -1,0 +1,50 @@
+.login-container {
+  height: 100%;
+  background: linear-gradient(225deg, #01c6fa, #1493fa);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.login-container .left {
+  width: 478px;
+  height: 550px;
+  background: #f5f5f5;
+  padding: 48px;
+}
+.login-container .left .title-box {
+  display: flex;
+  align-items: center;
+}
+.login-container .left .title-box img {
+  width: 22px;
+  height: 17px;
+  margin-right: 16px;
+}
+.login-container .left .title-box .title {
+  font-size: 24px;
+  margin-right: 14px;
+}
+.login-container .left .title-box .line {
+  width: 1px;
+  background-color: #c7c7c7;
+  height: 27px;
+  margin-right: 12px;
+}
+.login-container .left .title-box .sub-title {
+  font-size: 22px;
+}
+.login-container .left .login-form {
+  margin-top: 29px;
+}
+.login-container .left .login-form .captcha {
+  display: block;
+  width: 110px;
+  height: 42px;
+}
+.login-container .left .login-form .code .el-form-item__content {
+  display: flex;
+}
+.login-container .left .login-form .el-form-item__content {
+  text-align: left;
+  padding-left: 25px;
+}
