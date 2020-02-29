@@ -13,7 +13,15 @@ const sendsms=(data)=>{
         data
     })
 }
+const register = (data)=>{
+    return http({
+        url:"/register",
+        method:"POST",
+        data
+    })
+}
 export{
     login,
-    sendsms
+    sendsms,
+    register
 }

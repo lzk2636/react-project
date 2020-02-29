@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
+    "http-proxy-middleware": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

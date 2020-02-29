@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    Button, Dialog, Form, Input, Upload, imageUrl, Message, Layout
+    Button, Dialog, Form, Input, Upload, Message, Layout
 } from 'element-react'
 import propTypes from 'prop-types';
-import {sendsms} from '../../../api/login.js'
+import {sendsms,register} from '../../../api/login.js'
 class Register extends Component {
     regPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
     regEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
@@ -11,7 +11,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialogVisible: true,
+            dialogVisible: false,
             imageUrl: '',
             regForm: {
                 phone: "",
@@ -63,7 +63,7 @@ class Register extends Component {
                     { min: 4, max: 4, message: "验证码4个字符" }
                 ]
             },
-            captchaCode: "http://127.0.0.1/heimamm/public/captcha?type=sendsms",
+            captchaCode: "/api/captcha?type=sendsms",
             bIsRun: false,
             timer:10
         };
@@ -75,12 +75,14 @@ class Register extends Component {
         })
     }
     handleAvatarScucess(res, file) {
-        this.state.regForm.avatar=res.data.file_path
-        this.setState({
-            regForm:this.state.regForm
-        })
+        // this.state.regForm.avatar=res.data.file_path
+        
+        // this.setState({ 
+        //     regForm:this.state.regForm
+        // })
+        this.setState({regForm:Object.assign(this.state.regForm,{'avatar':res.data.file_path})})
         this.setState({ imageUrl: URL.createObjectURL(file.raw) });
-        console.log(this.state.regForm)
+        // console.log(this.state.regForm)
     }
 
     beforeAvatarUpload(file) {
@@ -102,10 +104,23 @@ class Register extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        this.refs.form.validate((valid) => {
+        let {username,rcode,email,phone,avatar,password} =this.state.regForm
+        this.refs.form.validate(async (valid) => {
             if (valid) {
-
-                console.log('object :');
+                const res =await register({
+                    username,
+                    rcode,
+                    email,
+                    phone,
+                    avatar,password
+                })
+                if(res.code===200){
+                    Message.success(res.data.user_id)
+                    this.setState({
+                        dialogVisible:false
+                    })
+                }
+                // console.log('object :');
 
             } else {
                 console.log('error submit!!');
@@ -115,7 +130,7 @@ class Register extends Component {
     }
     // 改变图形码
     fncaptchaCode = () => {
-        let captchaCode = "http://127.0.0.1/heimamm/public/captcha?type=sendsms&" + Date.now()
+        let captchaCode = "/api/captcha?type=sendsms&" + Date.now()
         this.setState({
             captchaCode
         })
@@ -174,13 +189,13 @@ class Register extends Component {
                             <Form.Item label="头像" labelWidth="80" style={{ height: "100px" }}>
                                 <Upload
                                     className="avatar-uploader"
-                                    action="http://127.0.0.1/heimamm/public/uploads"
+                                    action="/api/uploads"
                                     showFileList={false}
                                     name="image"
                                     onSuccess={(res, file) => this.handleAvatarScucess(res, file)}
                                     beforeUpload={file => this.beforeAvatarUpload(file)}
                                 >
-                                    {imageUrl ? <img src={imageUrl} className="avatar" style={{ width: "100px", height: "100px" }} /> : <i className="el-icon-plus avatar-uploader-icon"></i>}
+                                    {imageUrl ? <img src={imageUrl} alt="" className="avatar" style={{ width: "100px", height: "100px" }} /> : <i className="el-icon-plus avatar-uploader-icon"></i>}
                                 </Upload>
                             </Form.Item>
                             <Form.Item label="昵称" labelWidth="80">

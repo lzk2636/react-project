@@ -46,7 +46,7 @@ class Login extends Component {
                     { min: 4, max: 4, message: "验证码4个字符" }
                 ]
             },
-            codeUrl: `http://127.0.0.1/heimamm/public/captcha?type=login`,
+            codeUrl: `/api/captcha?type=login`,
             bIsChecked: false
         };
      this.Listener=store.subscribe(this.fnListener)
@@ -82,7 +82,7 @@ class Login extends Component {
                         type:'token',
                         value:res.data
                     })
-
+                    this.props.history.push('/index')
                 }
 
             } else {
@@ -104,7 +104,7 @@ class Login extends Component {
         });
     }
     fnChangeUrl = () => {
-        let codeUrl = `http://127.0.0.1/heimamm/public/captcha?type=login&${Date.now()}`
+        let codeUrl = `/api/captcha?type=login&${Date.now()}`
         this.setState({
             codeUrl
         })
