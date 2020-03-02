@@ -3,6 +3,7 @@ import { Card, Form, Input, Select, Button, Table, Pagination, Message } from 'e
 // 调用接口
 import { enterpriseList, updateEnterprise, deleteEnterprise } from '../../api/enterprise'
 import AddEnterprise from './components/addEnterprise'
+import EditEnterprise from './components/editEnterprise'
 class Enterprise extends Component {
     columns = [
         {
@@ -67,6 +68,10 @@ class Enterprise extends Component {
     }
     // 编辑企业
     fnEditEnter(obj) {
+        this.refs.editRefs.setValue(true)
+        this.setState({
+            obj
+        })
     }
     // 更新状态
     async  fnupdateEnter(obj) {
@@ -166,7 +171,7 @@ class Enterprise extends Component {
                             <Form.Item style={{ "marginBottom": 0 }}>
                                 <Button nativeType="submit" type="primary" onClick={this.fnSearch}>查询</Button>
                                 <Button nativeType="submit" type="primary" onClick={this.fnClear}>清除</Button>
-                                <Button nativeType="submit" type="primary" onClick={this.fnAddEnterprise}>新增用户</Button>
+                                <Button nativeType="submit" type="primary" onClick={this.fnAddEnterprise}>新增题库</Button>
                             </Form.Item>
                         </Form>
                     </div>
@@ -192,6 +197,7 @@ class Enterprise extends Component {
                             currentPage={this.state.currentPage} />
                     </Card>
                     <AddEnterprise ref="myRefs" addEnterprise={()=>this.currentdata()}/>
+                    <EditEnterprise ref="editRefs" obj={this.state.obj} addEnterprise={()=>this.currentdata()}/>
                 </div>
             
         );

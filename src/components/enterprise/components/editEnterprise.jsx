@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dialog, Button, Form, Input, Message, Select } from 'element-react'
-import  {addEnterprise} from '../../../api/enterprise.js'
-class EddEnterprise extends Component {
+import { editEnterprise } from '../../../api/enterprise.js'
+class EditEnterprise extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -15,16 +15,26 @@ class EddEnterprise extends Component {
             }
         }
 
+    }
+    static getDerivedStateFromProps(news, olds) {
+        if (news.obj !== undefined && news.obj.eid !== olds.form.eid) {
+            // console.log(news,olds)
+            return {
+                form: Object.assign(olds.form, news.obj)
+            }
+
+        }
+        return null
 
     }
-    setValue(val){
+    setValue(val) {
         this.setState({
-            EnterdialogVisible:val
+            eddEnterdialogVisible: val
         })
     }
-    onChange(key,value){
+    onChange(key, value) {
         this.setState({
-            form:Object.assign(this.state.form,{[key]:value})
+            form: Object.assign(this.state.form, { [key]: value })
         })
     }
     fnSubmit = (e) => {
@@ -32,11 +42,11 @@ class EddEnterprise extends Component {
         this.refs.form.validate(async (valid) => {
             if (valid) {
                 // alert('submit!');
-                let res = await addEnterprise(this.state.form)
+                let res = await editEnterprise(this.state.form)
                 if (res.code === 200) {
-                    Message.success("添加学生用成功")
+                    Message.success("编辑企业成功")
                     this.setState({
-                        EnterdialogVisible: false,
+                        eddEnterdialogVisible: false,
                         form: {}
                     }, () => this.props.addEnterprise())
                 } else {
@@ -54,8 +64,8 @@ class EddEnterprise extends Component {
             <Dialog
                 title="添加题库"
                 size="tiny"
-                visible={this.state.EnterdialogVisible}
-                onCancel={() => this.setState({ EnterdialogVisible: false })}
+                visible={this.state.eddEnterdialogVisible}
+                onCancel={() => this.setState({ eddEnterdialogVisible: false })}
                 lockScroll={false} >
                 <Dialog.Body>
                     <Form labelPosition={"left"} ref="form" labelWidth="100" rules={this.state.rules} model={this.state.form} className="demo-form-stacked">
@@ -78,7 +88,7 @@ class EddEnterprise extends Component {
                     </Form>
                 </Dialog.Body>
                 <Dialog.Footer className="dialog-footer">
-                    <Button onClick={() => this.setState({ EnterdialogVisible: false })}>取消</Button>
+                    <Button onClick={() => this.setState({ eddEnterdialogVisible: false })}>取消</Button>
                     <Button type="primary" onClick={this.fnSubmit}>确定</Button>
                 </Dialog.Footer>
             </Dialog>
@@ -86,4 +96,4 @@ class EddEnterprise extends Component {
     }
 }
 
-export default EddEnterprise;
+export default EditEnterprise;

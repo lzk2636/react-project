@@ -1,0 +1,19 @@
+.radio-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+
+}
+.el-input, .el-input__inner {
+    /* width: 500px; */
+}
+.avatar-uploader{
+    font-size: 28px;
+    color: #8c939d;
+    border: 1px solid #ccc;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
