@@ -1,8 +1,10 @@
 const {createProxyMiddleware} = require("http-proxy-middleware");
+// import {BASE_URL} from './utils/base'
 module.exports = function(app) {
+  // console.log(process.env.REACT_APP_BASE_URL)
   app.use(
     createProxyMiddleware("/api", {
-      target: "http://127.0.0.1/heimamm/public",
+      target: `${process.env.REACT_APP_BASE_URL}`,
       changeOrigin: true, // needed for virtual hosted sites
       ws: true, // proxy websockets
       pathRewrite: {

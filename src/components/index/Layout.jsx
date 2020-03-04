@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Menu, Form } from 'element-react'
+import { Button, Menu } from 'element-react'
 import './Layout.css'
 import index_icon from '../../assets/index_icon.png'
 import { Route, Switch } from 'react-router-dom'
@@ -9,11 +9,6 @@ import User from '../user/user'
 import Enterprise from '../enterprise'
 import Question from '../question'
 import { userInfo } from '../../api/user.js'
-
-
-function Page03() {
-    return <h1>我是第三页</h1>
-}
 class Layout extends Component {
     constructor(props) {
         super(props)
@@ -30,7 +25,6 @@ class Layout extends Component {
                 // console.log('this.props :', this.props);
                 this.props.history.push('/index/chart')
                 break
-
             case 'subject':
                 this.props.history.push('/index/subject')
                 break
